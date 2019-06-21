@@ -1,0 +1,15 @@
+.Side {
+  height: 100vh;
+  box-shadow: 4px 0 12px #CCC;
+}
+
+.Side .el-input i {
+  cursor: pointer;
+}
+
+.Side label.title {
+  text-align: center;
+  font-weight: bold;
+  display: block;
+  margin: 1rem 0;
+}
