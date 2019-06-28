@@ -5,6 +5,7 @@
   "dependencies": {
     "element-react": "^1.4.34",
     "element-theme-default": "^1.4.13",
+    "node-sass": "^4.12.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-hot-loader": "^4.11.1",
@@ -17,7 +18,84 @@
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
-    "extends": "react-app"
+    "extends": "react-app",
+    "rules": {
+        "brace-style": "off",
+        "linebreak-style": [
+            "error",
+            "unix"
+        ],
+        "quotes": [
+            "error",
+            "single"
+        ],
+        "semi": [
+            1,
+            "never"
+        ],
+        "no-multiple-empty-lines": [
+            1,
+            {
+                "max": 1
+            }
+        ],
+        "max-len": [
+            1,
+            100,
+            100,
+            {}
+        ],
+        "array-bracket-spacing": [
+            1,
+            "always",
+            {}
+        ],
+        "comma-spacing": [
+            1,
+            {
+                "after": true
+            }
+        ],
+        "comma-dangle": [
+            1,
+            "always"
+        ],
+        "keyword-spacing": [
+            1,
+            {
+                "before": true
+            }
+        ],
+        "space-before-function-paren": 1,
+        "eqeqeq": [
+            1,
+            "smart"
+        ],
+        "no-trailing-spaces": 1,
+        "no-multi-spaces": 1,
+        "eol-last": [
+            1,
+            "never"
+        ],
+        "indent": [
+            1,
+            4,
+            {
+                "SwitchCase": 1
+            }
+        ],
+        "brace-style": [
+            1,
+            "stroustrup",
+            {
+                "allowSingleLine": true
+            }
+        ],
+        "no-return-assign": [
+            0
+        ],
+        "no-console": "off"
+    }
   },
   "browserslist": {
     "production": [

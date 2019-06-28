@@ -1,0 +1,33 @@
+"*":
+  core:
+    audioBeep: false
+    closeDeletedFileTabs: true
+    closeEmptyWindows: false
+    disabledPackages: [
+      "tasks"
+    ]
+    restorePreviousWindowsOnStart: "no"
+    telemetryConsent: "no"
+    uriHandlerRegistration: "never"
+  editor:
+    fontSize: 15
+    preferredLineLength: 100
+    showIndentGuide: true
+    showInvisibles: true
+    tabLength: 4
+  "exception-reporting":
+    userId: "cf66b3d7-dc7b-4f11-bb14-4f933fde081c"
+  "linter-eslint":
+    autofix:
+      fixOnSave: true
+    global:
+      useGlobalEslint: true
+  "linter-ui-default":
+    panelHeight: 300
+  "local-config":
+    applyOnActivation: true
+  "project-manager": {}
+  welcome:
+    showOnStartup: false
+  whitespace:
+    ensureSingleTrailingNewline: false
