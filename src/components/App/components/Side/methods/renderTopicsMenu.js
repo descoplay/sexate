@@ -9,7 +9,7 @@ const renderMenu = topics => {
 
         if (!topic.childrens) {
             item = (
-                <Menu.Item index={topic.id.toString()}>
+                <Menu.Item index={topic.id.toString()} key={topic.id}>
                     <i className={topic.icon}></i>
                     {topic.title}
                 </Menu.Item>
@@ -19,6 +19,7 @@ const renderMenu = topics => {
             item = (
                 <Menu.SubMenu
                     index={topic.id.toString()}
+                    key={topic.id}
                     title={<span><i className={topic.icon}></i>{topic.title}</span>}
                 >
                     {renderMenu(topic.childrens)}
