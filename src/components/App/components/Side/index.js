@@ -1,11 +1,31 @@
 import React from 'react'
 import { Menu, Input, } from 'element-react'
 
+import TopicService from '../../../../services/Topic.js'
+
 import renderTopicsMenu from './methods/renderTopicsMenu'
 
 import './style.scss'
 
 export default class Side extends React.Component {
+    constructor (props) {
+        super(props)
+
+        this.state = {
+            topics: [],
+        }
+
+        this.fetchTopics()
+    }
+
+    fetchTopics () {
+        TopicService.listIdent().then(response => {
+            this.setState({
+                topics: response,
+            })
+        })
+    }
+
     render () {
         return (
             <Menu defaultActive="2" className="Side">
@@ -15,7 +35,7 @@ export default class Side extends React.Component {
                     placeholder="Busque aqui"
                     onIconClick={this.onSearch.bind(this)}
                 />
-                {renderTopicsMenu()}
+                {renderTopicsMenu(this.state.topics)}
             </Menu>
         )
     }

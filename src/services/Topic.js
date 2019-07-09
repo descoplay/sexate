@@ -1,30 +1,10 @@
-class Topic {
-    constructor () {
-        this.record = [
-            {
-                id: 1,
-                title: 'Introdução',
-                icon: 'el-icon-menu',
-            },
-            {
-                id: 2,
-                title: 'Configurações',
-                icon: 'el-icon-setting',
-                childrens: [
-                    {
-                        id: 3,
-                        title: 'E-mail',
-                        icon: 'el-icon-message',
-                    },
-                ],
-            },
-        ]
-    }
+import Service from './Default'
 
-    list () {
-        return {
-            data: this.record,
-        }
+class Topic extends Service {
+    constructor () {
+        super({
+            entity: 'Topic',
+        })
     }
 }
 

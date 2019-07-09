@@ -6,4 +6,10 @@ module.exports = _server => {
             res.json(response)
         })
     })
+
+    _server.get(`/${Model.entity}/listIdent`, (req, res) => {
+        Model.listIdent().then(response => {
+            res.json(response)
+        })
+    })
 }

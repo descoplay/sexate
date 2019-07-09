@@ -1,4 +1,7 @@
 const server = require('express')()
+const cors = require('cors')()
+
+server.use(cors)
 
 require('./Db').connect()
     .then(Db => {

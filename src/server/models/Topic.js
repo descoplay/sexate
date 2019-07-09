@@ -1,4 +1,5 @@
 const Db = require('../Db')
+const promiseLoopArray = require('@desco/promise-loop-array')
 
 class Topic {
     constructor () {
@@ -10,6 +11,28 @@ class Topic {
         const sql = `SELECT * FROM ${this.table}`
 
         return Db.conn.query(sql)
+    }
+
+    listIdent (_id) {
+        let sql = `SELECT * FROM ${this.table} WHERE parent `
+
+        if (!_id) {
+            sql += 'IS NULL'
+        }
+        else {
+            sql += `= ${_id}`
+        }
+
+        return Db.conn.query(sql).then(response => {
+            return promiseLoopArray(response, data => {
+                return this.listIdent(data.id).then(childrens => {
+                    return {
+                        ...data,
+                        childrens,
+                    }
+                })
+            })
+        })
     }
 }
 
