@@ -12,4 +12,10 @@ module.exports = _server => {
             res.json(response)
         })
     })
+
+    _server.get(`/${Model.entity}/readFirst`, (req, res) => {
+        Model.readFirst().then(response => {
+            res.json(response)
+        })
+    })
 }

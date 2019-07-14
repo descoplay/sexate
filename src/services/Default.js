@@ -7,6 +7,7 @@ Http.defaults.baseURL = 'http://localhost:3001/'
 export default class Service {
     constructor (_params) {
         this.entity = _params.entity
+        this.Http = Http
     }
 
     list () {

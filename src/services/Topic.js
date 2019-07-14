@@ -6,6 +6,12 @@ class Topic extends Service {
             entity: 'Topic',
         })
     }
+
+    readFirst () {
+        return this.Http.get(`${this.entity}/readFirst`).then(response => {
+            return response.data
+        })
+    }
 }
 
 export default new Topic()

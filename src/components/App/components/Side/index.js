@@ -1,7 +1,8 @@
 import React from 'react'
 import { Menu, Input, } from 'element-react'
 
-import TopicService from '../../../../services/Topic.js'
+import ConfigService from '../../../../services/Config'
+import TopicService from '../../../../services/Topic'
 
 import renderTopicsMenu from './methods/renderTopicsMenu'
 
@@ -13,9 +14,19 @@ export default class Side extends React.Component {
 
         this.state = {
             topics: [],
+            configs: {},
         }
 
         this.fetchTopics()
+        this.fetchConfigs()
+    }
+
+    fetchConfigs () {
+        ConfigService.read().then(response => {
+            this.setState({
+                configs: response[0],
+            })
+        })
     }
 
     fetchTopics () {
@@ -29,7 +40,7 @@ export default class Side extends React.Component {
     render () {
         return (
             <Menu defaultActive="2" className="Side">
-                <label className="title">Nome Sistema</label>
+                <label className="title">{this.state.configs.project_name}</label>
                 <Input
                     icon="search"
                     placeholder="Busque aqui"

@@ -34,6 +34,13 @@ class Topic {
             })
         })
     }
+
+    readFirst () {
+        const sql = `SELECT * FROM ${this.table} WHERE sequence = 1 AND parent IS NULL`
+
+        return Db.conn.query(sql)
+    }
+
 }
 
 module.exports = new Topic()
