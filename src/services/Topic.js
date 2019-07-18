@@ -12,6 +12,18 @@ class Topic extends Service {
             return response.data
         })
     }
+
+    next (_id) {
+        return this.Http.get(`${this.entity}/next/${_id}`).then(response => {
+            return response.data
+        })
+    }
+
+    preview (_id) {
+        return this.Http.get(`${this.entity}/preview/${_id}`).then(response => {
+            return response.data
+        })
+    }
 }
 
 export default new Topic()

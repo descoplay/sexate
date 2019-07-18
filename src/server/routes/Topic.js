@@ -18,4 +18,16 @@ module.exports = _server => {
             res.json(response)
         })
     })
+
+    _server.get(`/${Model.entity}/preview/:id`, (req, res) => {
+        Model.preview(req.params.id).then(response => {
+            res.json(response)
+        })
+    })
+
+    _server.get(`/${Model.entity}/next/:id`, (req, res) => {
+        Model.next(req.params.id).then(response => {
+            res.json(response)
+        })
+    })
 }

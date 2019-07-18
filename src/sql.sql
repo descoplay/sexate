@@ -56,7 +56,7 @@ CREATE TABLE `topics` (
   PRIMARY KEY (`id`),
   KEY `topics_topics_fk` (`parent`),
   CONSTRAINT `topics_topics_fk` FOREIGN KEY (`parent`) REFERENCES `topics` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -65,7 +65,7 @@ CREATE TABLE `topics` (
 
 LOCK TABLES `topics` WRITE;
 /*!40000 ALTER TABLE `topics` DISABLE KEYS */;
-INSERT INTO `topics` VALUES (1,'Introdução','el-icon-menu',NULL,1,'## teste'),(2,'Configurações','el-icon-setting',NULL,2,''),(3,'E-mail','el-icon-message',2,1,'');
+INSERT INTO `topics` VALUES (1,'Introdução','el-icon-menu',NULL,1,'# Introdução'),(2,'Configurações','el-icon-setting',NULL,2,'# Configurações'),(3,'E-mail','el-icon-message',2,1,'# E-mail'),(4,'A Equipe','el-icon-star-on',NULL,3,'# A Equipe');
 /*!40000 ALTER TABLE `topics` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -82,4 +82,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-07-14 14:44:24
+-- Dump completed on 2019-07-18 15:04:18

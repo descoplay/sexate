@@ -28,6 +28,12 @@ export default class App extends React.Component {
         })
     }
 
+    changeTopic (_topic) {
+        this.setState({
+            topic: _topic,
+        })
+    }
+
     render () {
         return (
             <div className="App">
@@ -37,7 +43,7 @@ export default class App extends React.Component {
                     </Layout.Col>
                     <Layout.Col span="20">
                         <Content topic={this.state.topic} />
-                        <Paginate />
+                        <Paginate topic={this.state.topic} onChangeTopic={this.changeTopic}/>
                     </Layout.Col>
                 </Layout.Row>
             </div>
