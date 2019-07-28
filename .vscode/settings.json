@@ -1,0 +1,15 @@
+{
+    "editor.renderWhitespace": "all",
+    "editor.insertSpaces": false,
+    "editor.wordWrapColumn": 1000,
+    "files.exclude": {
+        "**/.vscode": true,
+        "**/node_modules": true
+    },
+    "editor.autoClosingBrackets": "always",
+    "editor.autoClosingQuotes": "always",
+    "editor.foldingStrategy": "indentation",
+    "editor.minimap.enabled": false,
+    "editor.acceptSuggestionOnCommitCharacter": false,
+    "editor.acceptSuggestionOnEnter": "off"
+}
