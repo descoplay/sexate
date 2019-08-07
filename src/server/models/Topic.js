@@ -69,13 +69,28 @@ class Topic {
     }
 
     async readLastChildren (_id) {
-        const childrens = await this.readChildrens(_id).reverse()
+        const childrens = (await this.readChildrens(_id)).reverse()
 
         return childrens[0] ? [ childrens[0], ] : []
     }
 
-    preview (_id) {
-        return Promise.resolve({})
+    async preview (_id) {
+        const currentTopic = await this.read(_id)
+
+        const previewSequence = currentTopic[0].sequence - 1
+        const previewParent = currentTopic[0].parent
+
+        if (previewSequence >= 1) {
+            const previewTopic = await this.readBySequence(previewSequence, previewParent)
+            const lastChildOfPrevTopic = await this.readLastChildren(previewTopic[0].id)
+
+            return Promise.resolve(
+                lastChildOfPrevTopic.length > 0 ? lastChildOfPrevTopic : previewTopic
+            )
+        }
+        else {
+            return this.read(currentTopic[0].parent)
+        }
     }
 
     async next (_id) {
