@@ -10,7 +10,7 @@
     telemetryConsent: "no"
     uriHandlerRegistration: "never"
   editor:
-    fontSize: 15
+    fontSize: 25
     preferredLineLength: 100
     showIndentGuide: true
     showInvisibles: true
