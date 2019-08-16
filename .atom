@@ -21,7 +21,7 @@
     autofix:
       fixOnSave: true
     global:
-      useGlobalEslint: true
+      useGlobalEslint: false
   "linter-ui-default":
     panelHeight: 300
   "local-config":
