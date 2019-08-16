@@ -1,7 +1,7 @@
 import React from 'react'
 import { Layout, Button, } from 'element-react'
 
-import TopicService from '../../../../services/Topic'
+import TopicService from '@/services/Topic'
 
 import './style.scss'
 

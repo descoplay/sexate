@@ -1,8 +1,8 @@
 import React from 'react'
 import { Menu, Input, } from 'element-react'
 
-import ConfigService from '../../../../services/Config'
-import TopicService from '../../../../services/Topic'
+import ConfigService from '@/services/Config'
+import TopicService from '@/services/Topic'
 
 import renderTopicsMenu from './methods/renderTopicsMenu'
 

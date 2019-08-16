@@ -7,7 +7,7 @@ import Side from './components/Side'
 import Content from './components/Content'
 import Paginate from './components/Paginate'
 
-import TopicService from '../../services/Topic'
+import TopicService from '@/services/Topic'
 
 export default class App extends React.Component {
     constructor () {
