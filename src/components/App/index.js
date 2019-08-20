@@ -18,6 +18,8 @@ export default class App extends React.Component {
         }
 
         this.fetchFirstTopic()
+
+        this.changeTopic = this.changeTopic.bind(this)
     }
 
     fetchFirstTopic () {
@@ -39,7 +41,7 @@ export default class App extends React.Component {
             <div className="App">
                 <Layout.Row>
                     <Layout.Col span="4">
-                        <Side />
+                        <Side onTopicClick={this.changeTopic} />
                     </Layout.Col>
                     <Layout.Col span="20">
                         <Content topic={this.state.topic} />

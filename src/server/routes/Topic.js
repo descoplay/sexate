@@ -13,6 +13,12 @@ module.exports = _server => {
         })
     })
 
+    _server.get(`/${Model.entity}/read/:id`, (req, res) => {
+        Model.read(req.params.id).then(response => {
+            res.json(response)
+        })
+    })
+
     _server.get(`/${Model.entity}/readFirst`, (req, res) => {
         Model.readFirst().then(response => {
             res.json(response)

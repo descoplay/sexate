@@ -7,6 +7,12 @@ class Topic extends Service {
         })
     }
 
+    read (_id) {
+        return this.Http.get(`${this.entity}/read/${_id}`).then(response => {
+            return response.data
+        })
+    }
+
     readFirst () {
         return this.Http.get(`${this.entity}/readFirst`).then(response => {
             return response.data

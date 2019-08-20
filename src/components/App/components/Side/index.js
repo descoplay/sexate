@@ -4,7 +4,7 @@ import { Menu, Input, } from 'element-react'
 import ConfigService from '@/services/Config'
 import TopicService from '@/services/Topic'
 
-import renderTopicsMenu from './methods/renderTopicsMenu'
+import Topics from './components/Topics'
 
 import './style.scss'
 
@@ -19,6 +19,10 @@ export default class Side extends React.Component {
 
         this.fetchTopics()
         this.fetchConfigs()
+
+        this.onTopicClick = props.onTopicClick
+
+        this._onTopicClick = this._onTopicClick.bind(this)
     }
 
     fetchConfigs () {
@@ -37,16 +41,22 @@ export default class Side extends React.Component {
         })
     }
 
+    _onTopicClick (_topicId) {
+        return TopicService.read(_topicId).then(response => {
+            this.onTopicClick(response[0])
+        })
+    }
+
     render () {
         return (
-            <Menu defaultActive="2" className="Side">
+            <Menu defaultActive="2" className="Side" onSelect={this._onTopicClick}>
                 <label className="title">{this.state.configs.project_name}</label>
                 <Input
                     icon="search"
                     placeholder="Busque aqui"
                     onIconClick={this.onSearch.bind(this)}
                 />
-                {renderTopicsMenu(this.state.topics)}
+                <Topics topics={this.state.topics}/>
             </Menu>
         )
     }
