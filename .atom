@@ -19,7 +19,7 @@
     userId: "cf66b3d7-dc7b-4f11-bb14-4f933fde081c"
   "linter-eslint":
     autofix:
-      fixOnSave: false
+      fixOnSave: true
     global:
       useGlobalEslint: false
   "linter-ui-default":
