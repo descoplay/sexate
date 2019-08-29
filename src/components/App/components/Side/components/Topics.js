@@ -6,7 +6,7 @@ export default class Topics extends React.Component {
         super()
 
         this.state = {
-            topics: []
+            topics: [],
         }
 
         this.renderMenu = this.renderMenu.bind(this)

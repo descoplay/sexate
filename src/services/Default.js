@@ -10,8 +10,12 @@ export default class Service {
         this.Http = Http
     }
 
-    list () {
-        return Http.get(`${this.entity}`).then(response => {
+    list (_options = {}) {
+        return Http.get(`${this.entity}`, {
+            params: {
+                query: _options.query,
+            },
+        }).then(response => {
             return response.data
         })
     }

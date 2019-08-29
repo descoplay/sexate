@@ -7,8 +7,20 @@ class Topic {
         this.table = 'topics'
     }
 
-    list () {
-        const sql = `SELECT * FROM ${this.table}`
+    list (_options) {
+        let where = ''
+
+        if (_options.query) {
+            where = `WHERE title LIKE "%${_options.query}%" OR content LIKE "%${_options.query}%"`
+        }
+
+        const sql = `
+            SELECT
+                *
+            FROM
+                ${this.table}
+            ${where}
+            `
 
         return Db.conn.query(sql)
     }

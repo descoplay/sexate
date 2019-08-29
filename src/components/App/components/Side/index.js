@@ -15,14 +15,18 @@ export default class Side extends React.Component {
         this.state = {
             topics: [],
             configs: {},
+            query: '',
         }
 
         this.fetchTopics()
         this.fetchConfigs()
 
         this.onTopicClick = props.onTopicClick
+        this.onSearch = props.onSearch
 
         this._onTopicClick = this._onTopicClick.bind(this)
+        this._onSearch = this._onSearch.bind(this)
+        this.onChangeQuery = this.onChangeQuery.bind(this)
     }
 
     fetchConfigs () {
@@ -47,6 +51,18 @@ export default class Side extends React.Component {
         })
     }
 
+    _onSearch () {
+        TopicService.list({ query: this.state.query, }).then(response => {
+            this.onSearch(response)
+        })
+    }
+
+    onChangeQuery (_query) {
+        this.setState({
+            query: _query,
+        })
+    }
+
     render () {
         return (
             <Menu defaultActive="2" className="Side" onSelect={this._onTopicClick}>
@@ -54,14 +70,12 @@ export default class Side extends React.Component {
                 <Input
                     icon="search"
                     placeholder="Busque aqui"
-                    onIconClick={this.onSearch.bind(this)}
+                    value={this.state.query}
+                    onChange={this.onChangeQuery}
+                    onIconClick={this._onSearch}
                 />
                 <Topics topics={this.state.topics}/>
             </Menu>
         )
-    }
-
-    onSearch () {
-        alert('Busca a ser implementada')
     }
 }
