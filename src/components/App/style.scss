@@ -1,0 +1,28 @@
+.App {
+    .SideArea,
+    .ContentArea {
+        height: 100vh;
+    }
+
+    .SideArea {
+    }
+
+    .ContentArea {
+        display: flex;
+        flex-direction: column;
+
+        .TopicArea {
+            height: 90vh;
+        }
+
+        .PaginateArea {
+            $height: 10vh;
+
+            &,
+            .Paginate {
+                height: $height;
+                line-height: $height;
+            }
+        }
+    }
+}
