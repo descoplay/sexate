@@ -34,14 +34,14 @@ export default class App extends React.Component {
         else {
             const id = parseInt(route.replace('/', ''))
 
-            this.loadTopic(id)
+            TopicService.read(id).then(response => {
+                this.changeTopic(response[0], true)
+            })
         }
-    }
 
-    loadTopic (_id) {
-        TopicService.read(_id).then(response => {
-            this.changeTopic(response[0])
-        })
+        window.onpopstate = e => {
+            this.router()
+        }
     }
 
     fetchFirstTopic () {
@@ -52,16 +52,18 @@ export default class App extends React.Component {
         })
     }
 
-    changeTopic (_topic) {
+    changeTopic (_topic, _pushIgnore = false) {
         const oldUrl = window.location.pathname
         const newUrl = `/${_topic.id}`
-
-        window.history.pushState(oldUrl, null, newUrl)
 
         this.setState({
             topic: _topic,
             searchResults: [],
         })
+
+        if (_pushIgnore) return
+
+        window.history.pushState(oldUrl, null, newUrl)
     }
 
     onSearch (_topics) {
