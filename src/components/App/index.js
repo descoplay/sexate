@@ -19,10 +19,29 @@ export default class App extends React.Component {
             searchResults: [],
         }
 
-        this.fetchFirstTopic()
+        this.router()
 
         this.changeTopic = this.changeTopic.bind(this)
         this.onSearch = this.onSearch.bind(this)
+    }
+
+    router () {
+        const route = window.location.pathname
+
+        if (route === '/') {
+            this.fetchFirstTopic()
+        }
+        else {
+            const id = parseInt(route.replace('/', ''))
+
+            this.loadTopic(id)
+        }
+    }
+
+    loadTopic (_id) {
+        TopicService.read(_id).then(response => {
+            this.changeTopic(response[0])
+        })
     }
 
     fetchFirstTopic () {
@@ -34,6 +53,11 @@ export default class App extends React.Component {
     }
 
     changeTopic (_topic) {
+        const oldUrl = window.location.pathname
+        const newUrl = `/${_topic.id}`
+
+        window.history.pushState(oldUrl, null, newUrl)
+
         this.setState({
             topic: _topic,
             searchResults: [],
