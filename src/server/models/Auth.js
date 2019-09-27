@@ -33,6 +33,17 @@ class Auth {
             return Promise.resolve({ userId: user.id, token, })
         })
     }
+
+    async tokenIsValid (_data) {
+        if (!_data || !_data.token || !_data.id) return false
+
+        const token = _data.token
+        const userId = _data.id
+        const sql = `SELECT id FROM ${this.table} WHERE id = ${userId} AND token = '${token}'`
+        const user = (await Db.conn.query(sql))[0]
+
+        return !!user
+    }
 }
 
 module.exports = new Auth()
