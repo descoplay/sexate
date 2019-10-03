@@ -11,4 +11,10 @@ module.exports = _server => {
                 res.json(error)
             })
     })
+
+    _server.get(`/${Model.entity}/logout/:id`, (req, res) => {
+        Model.logout(req.params.id).then(response => {
+            res.json({ message: 'Success', })
+        })
+    })
 }

@@ -13,11 +13,11 @@ class Auth {
     async login (_login, _password ) {
         const login = `"${_login}"`
         const password = `"${_password}"`
-        const sqlSelect = `
+        const sql = `
             SELECT id FROM ${this.table} WHERE login = ${login} AND password = ${password}
         `
 
-        const user = (await Db.conn.query(sqlSelect))[0]
+        const user = (await Db.conn.query(sql))[0]
 
         if (!user) {
             return Promise.reject({
@@ -25,17 +25,28 @@ class Auth {
             })
         }
 
-        const token = jwt.sign({ id: user.id, }, secret, { expiresIn: 30 * 60, })
+        return this.generateToken(user).then(token => {
+            return Promise.resolve({ ...token, userId: user.id, })
+        })
+    }
 
-        const sqlUpdate = `UPDATE ${this.table} SET token = "${token}" WHERE id = ${user.id}`
+    generateToken (_user) {
+        const token = jwt.sign({ id: _user.id, }, secret, { expiresIn: '30m', })
 
-        return Db.conn.query(sqlUpdate).then(() => {
-            return Promise.resolve({ userId: user.id, token, })
+        return this.setToken(_user.id, token).then(() => {
+            return Promise.resolve({ token, })
         })
     }
 
     async tokenIsValid (_data) {
         if (!_data || !_data.token || !_data.id) return false
+
+        try {
+            jwt.verify(_data.token, secret)
+        }
+        catch (e) {
+            return false
+        }
 
         const token = _data.token
         const userId = _data.id
@@ -43,6 +54,16 @@ class Auth {
         const user = (await Db.conn.query(sql))[0]
 
         return !!user
+    }
+
+    logout (_id) {
+        return this.setToken(_id, '')
+    }
+
+    setToken (_id, _token) {
+        const sql = `UPDATE ${this.table} SET token = "${_token}" WHERE id = ${_id}`
+
+        return Db.conn.query(sql)
     }
 }
 
