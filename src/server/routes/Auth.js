@@ -12,9 +12,13 @@ module.exports = _server => {
             })
     })
 
-    _server.get(`/${Model.entity}/logout/:id`, (req, res) => {
-        Model.logout(req.params.id).then(response => {
-            res.json({ message: 'Success', })
-        })
+    _server.get(`/${Model.entity}/logout`, (req, res) => {
+        Model.logout(req.headers.token)
+            .then(response => {
+                res.json({ message: 'Success', })
+            })
+            .catch(() => {
+                res.json({ message: 'Error', })
+            })
     })
 }

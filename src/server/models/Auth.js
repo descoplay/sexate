@@ -30,6 +30,27 @@ class Auth {
         })
     }
 
+    logout (_token) {
+        const data = this.decryptToken(_token)
+
+        return this.setToken(data.id, '')
+    }
+
+    decryptToken (_token) {
+        try {
+            return jwt.verify(_token, secret)
+        }
+        catch (e) {
+            return false
+        }
+    }
+
+    setToken (_id, _token) {
+        const sql = `UPDATE ${this.table} SET token = "${_token}" WHERE id = ${_id}`
+
+        return Db.conn.query(sql)
+    }
+
     generateToken (_user) {
         const token = jwt.sign({ id: _user.id, }, secret, { expiresIn: '30m', })
 
@@ -41,12 +62,7 @@ class Auth {
     async tokenIsValid (_data) {
         if (!_data || !_data.token || !_data.id) return false
 
-        try {
-            jwt.verify(_data.token, secret)
-        }
-        catch (e) {
-            return false
-        }
+        if (!this.decryptToken(_data.token)) return false
 
         const token = _data.token
         const userId = _data.id
@@ -54,16 +70,6 @@ class Auth {
         const user = (await Db.conn.query(sql))[0]
 
         return !!user
-    }
-
-    logout (_id) {
-        return this.setToken(_id, '')
-    }
-
-    setToken (_id, _token) {
-        const sql = `UPDATE ${this.table} SET token = "${_token}" WHERE id = ${_id}`
-
-        return Db.conn.query(sql)
     }
 }
 

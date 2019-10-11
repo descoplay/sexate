@@ -35,10 +35,10 @@ function ifPublicRoute (_url) {
 }
 
 function compareRoutes (_route1, _route2) {
-    const route1 = _route1.split('/')
-    const route2 = _route2.split('/')
+    const route1 = `${_route1}/`.replace('//', '/').split('/')
+    const route2 = `${_route2}/`.replace('//', '/').split('/')
 
-    if (_route1.length !== _route2.length) return false
+    if (route1.length !== route2.length) return false
 
     for (let c = 0, max = route1.length; c < max; c++) {
         if (route1[c].indexOf(':') !== -1) continue
