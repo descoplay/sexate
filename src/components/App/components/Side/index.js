@@ -4,6 +4,7 @@ import { Menu, Input, } from 'element-react'
 import ConfigService from '@/services/Config'
 import TopicService from '@/services/Topic'
 
+import Auth from './components/Auth'
 import Topics from './components/Topics'
 
 import './style.scss'
@@ -75,6 +76,7 @@ export default class Side extends React.Component {
                     onIconClick={this._onSearch}
                 />
                 <Topics topics={this.state.topics}/>
+                <Auth />
             </Menu>
         )
     }

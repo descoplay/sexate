@@ -1,0 +1,31 @@
+.authArea {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: #222;
+    color: #FFF;
+    padding: .5rem 0;
+
+    svg {
+        float: right;
+        margin-right: .5rem;
+        cursor: pointer;
+    }
+
+    .el-input {
+        &.authUserField {
+            margin-right: .5rem;
+        }
+
+        &.authPasswordField {
+            margin-left: .5rem;
+        }
+
+        input {
+            text-align: center;
+            border-bottom: 1px solid #CCC !important;
+        }
+    }
+
+}
