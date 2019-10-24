@@ -1,7 +1,9 @@
 import React from 'react'
-import { Input, Dialog, Button, Layout, } from 'element-react'
+import { Input, Dialog, Button, Layout, MessageBox, } from 'element-react'
 import { FontAwesomeIcon, } from '@fortawesome/react-fontawesome'
 import { faLock, faLockOpen, } from '@fortawesome/free-solid-svg-icons'
+
+import AuthService from '@/services/Auth'
 
 import './style.scss'
 
@@ -12,6 +14,8 @@ export default class Auth extends React.Component {
         this.state = {
             ifLogged: false,
             visible: false,
+            user: '',
+            password: '',
         }
 
         this.toogleVisible = this.toogleVisible.bind(this)
@@ -27,12 +31,28 @@ export default class Auth extends React.Component {
     }
 
     login () {
-        this.setState({ ifLogged: true, })
-        this.toogleVisible()
+        AuthService.login(this.state.user, this.state.password)
+            .then(response => {
+                this.setState({ ifLogged: true, })
+                this.toogleVisible()
+            })
+            .catch(e => {
+                MessageBox.alert('Verifique os dados e tente novamente.', 'Dados inválidos', {
+                    confirmButtonText: 'OK',
+                })
+            })
     }
 
     logout () {
-        this.setState({ ifLogged: false, })
+        AuthService.logout()
+            .then(() => {
+                this.setState({ ifLogged: false, })
+            })
+            .catch(e => {
+                MessageBox.alert('Ocorreu um erro, por favor tente novamente mais tarde.', 'Ops!', {
+                    confirmButtonText: 'OK',
+                })
+            })
     }
 
     onChangeValue (_value, _field) {
@@ -75,6 +95,7 @@ export default class Auth extends React.Component {
                             </Layout.Col>
                             <Layout.Col span="12">
                                 <Input
+                                    type="password"
                                     className="authPasswordField"
                                     placeholder="Senha"
                                     value={this.state.password}
