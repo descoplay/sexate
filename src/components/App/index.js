@@ -17,12 +17,16 @@ export default class App extends React.Component {
         this.state = {
             topic: {},
             searchResults: [],
+            logged: false,
+            newTopic: false,
         }
 
         this.router()
 
         this.changeTopic = this.changeTopic.bind(this)
         this.onSearch = this.onSearch.bind(this)
+        this.onToogleAuth = this.onToogleAuth.bind(this)
+        this.newTopic = this.newTopic.bind(this)
     }
 
     router () {
@@ -59,11 +63,16 @@ export default class App extends React.Component {
         this.setState({
             topic: _topic,
             searchResults: [],
+            newTopic: false,
         })
 
         if (_pushIgnore) return
 
         window.history.pushState(oldUrl, null, newUrl)
+    }
+
+    newTopic () {
+        this.setState({ newTopic: true, })
     }
 
     onSearch (_topics) {
@@ -72,11 +81,21 @@ export default class App extends React.Component {
         })
     }
 
+    onToogleAuth (_logged) {
+        this.setState({ logged: _logged, })
+    }
+
     render () {
         let content
 
         if (this.state.searchResults.length === 0) {
-            content = <Content topic={this.state.topic} />
+            content = (
+                <Content
+                    topic={this.state.topic}
+                    logged={this.state.logged}
+                    newTopic={this.state.newTopic}
+                />
+            )
         }
         else {
             content = <SearchResults
@@ -85,24 +104,15 @@ export default class App extends React.Component {
             />
         }
 
-        // return (
-        //     <div className="App">
-        //         <Layout.Row>
-        //             <Layout.Col span="4">
-        //                 <Side onTopicClick={this.changeTopic} onSearch={this.onSearch}/>
-        //             </Layout.Col>
-        //             <Layout.Col span="20">
-        //                 {content}
-        //                 <Paginate topic={this.state.topic} onChangeTopic={this.changeTopic}/>
-        //             </Layout.Col>
-        //         </Layout.Row>
-        //     </div>
-        // )
-
         return (
             <Layout.Row className="App">
                 <Layout.Col span="4" className="SideArea">
-                    <Side onTopicClick={this.changeTopic} onSearch={this.onSearch}/>
+                    <Side
+                        onTopicClick={this.changeTopic}
+                        onSearch={this.onSearch}
+                        onToogleAuth={this.onToogleAuth}
+                        onNewTopic={this.newTopic}
+                    />
                 </Layout.Col>
                 <Layout.Col span="20" className="ContentArea">
                     <div className="TopicArea">

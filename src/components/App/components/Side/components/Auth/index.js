@@ -8,7 +8,7 @@ import AuthService from '@/services/Auth'
 import './style.scss'
 
 export default class Auth extends React.Component {
-    constructor () {
+    constructor (_props) {
         super()
 
         this.state = {
@@ -18,10 +18,13 @@ export default class Auth extends React.Component {
             password: '',
         }
 
+        this.toogle = _props.toogle || function () {}
+
         this.toogleVisible = this.toogleVisible.bind(this)
         this.login = this.login.bind(this)
         this.logout = this.logout.bind(this)
         this.onChangeValue = this.onChangeValue.bind(this)
+        this.setLogged = this.setLogged.bind(this)
     }
 
     toogleVisible () {
@@ -33,7 +36,7 @@ export default class Auth extends React.Component {
     login () {
         AuthService.login(this.state.user, this.state.password)
             .then(response => {
-                this.setState({ ifLogged: true, })
+                this.setLogged(true)
                 this.toogleVisible()
             })
             .catch(e => {
@@ -46,13 +49,18 @@ export default class Auth extends React.Component {
     logout () {
         AuthService.logout()
             .then(() => {
-                this.setState({ ifLogged: false, })
+                this.setLogged(false)
             })
             .catch(e => {
                 MessageBox.alert('Ocorreu um erro, por favor tente novamente mais tarde.', 'Ops!', {
                     confirmButtonText: 'OK',
                 })
             })
+    }
+
+    setLogged (_logged) {
+        this.setState({ ifLogged: _logged, })
+        this.toogle(_logged)
     }
 
     onChangeValue (_value, _field) {

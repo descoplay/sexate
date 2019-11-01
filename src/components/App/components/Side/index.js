@@ -1,5 +1,5 @@
 import React from 'react'
-import { Menu, Input, } from 'element-react'
+import { Menu, Input, Button, } from 'element-react'
 
 import ConfigService from '@/services/Config'
 import TopicService from '@/services/Topic'
@@ -17,6 +17,7 @@ export default class Side extends React.Component {
             topics: [],
             configs: {},
             query: '',
+            logged: false,
         }
 
         this.fetchTopics()
@@ -24,9 +25,12 @@ export default class Side extends React.Component {
 
         this.onTopicClick = props.onTopicClick
         this.onSearch = props.onSearch
+        this.onToogleAuth = props.onToogleAuth
+        this.newTopic = props.onNewTopic
 
         this._onTopicClick = this._onTopicClick.bind(this)
         this._onSearch = this._onSearch.bind(this)
+        this._onToogleAuth = this._onToogleAuth.bind(this)
         this.onChangeQuery = this.onChangeQuery.bind(this)
     }
 
@@ -64,7 +68,21 @@ export default class Side extends React.Component {
         })
     }
 
+    _onToogleAuth (_logged) {
+        this.setState({ logged: _logged, })
+
+        this.onToogleAuth(_logged)
+    }
+
     render () {
+        let newTopicBtn = ''
+
+        if (this.state.logged) {
+            newTopicBtn = (
+                <Button className="newTopicBtn" onClick={this.newTopic}>Novo Tópico</Button>
+            )
+        }
+
         return (
             <Menu defaultActive="2" className="Side" onSelect={this._onTopicClick}>
                 <label className="title">{this.state.configs.project_name}</label>
@@ -75,8 +93,9 @@ export default class Side extends React.Component {
                     onChange={this.onChangeQuery}
                     onIconClick={this._onSearch}
                 />
+                {newTopicBtn}
                 <Topics topics={this.state.topics}/>
-                <Auth />
+                <Auth toogle={this._onToogleAuth} />
             </Menu>
         )
     }
