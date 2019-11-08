@@ -1,38 +1,33 @@
 import React from 'react'
 import { Layout, Button, } from 'element-react'
 
+import Component from '@/components'
+
 import TopicService from '@/services/Topic'
 
 import './style.scss'
 
-export default class Paginate extends React.Component {
-    constructor (props) {
-        super(props)
-
-        this.state = {
-            topic: props.topic,
-        }
-
-        this.preview = this.preview.bind(this)
-        this.next = this.next.bind(this)
-        this.changeCurrentTopic = props.onChangeTopic
-    }
-
-    componentWillReceiveProps (props) {
-        this.setState({
-            topic: props.topic,
-        })
-    }
-
-    preview () {
-        TopicService.preview(this.state.topic.id).then(response => {
-            this.changeCurrentTopic(response[0])
-        })
-    }
-
-    next () {
-        TopicService.next(this.state.topic.id).then(response => {
-            this.changeCurrentTopic(response[0])
+export default class Paginate extends Component {
+    constructor (_props) {
+        super({
+            state: {
+                topic: _props.topic,
+            },
+            methods: {
+                preview () {
+                    TopicService.preview(this.state.topic.id).then(response => {
+                        this.changeCurrentTopic(response[0])
+                    })
+                },
+                next () {
+                    TopicService.next(this.state.topic.id).then(response => {
+                        this.changeCurrentTopic(response[0])
+                    })
+                },
+            },
+            events: {
+                changeCurrentTopic: _props.onChangeTopic,
+            },
         })
     }
 

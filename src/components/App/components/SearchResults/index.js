@@ -1,21 +1,18 @@
 import React from 'react'
 
+import Component from '@/components'
+
 import './style.scss'
 
-export default class Content extends React.Component {
+export default class Content extends Component {
     constructor (props) {
-        super()
-
-        this.state = {
-            topics: props.topics,
-        }
-
-        this.onSelect = props.onSelect
-    }
-
-    componentWillReceiveProps (props) {
-        this.setState({
-            topics: props.topics,
+        super({
+            state: {
+                topics: props.topics,
+            },
+            events: {
+                onSelect: props.onSelect,
+            },
         })
     }
 

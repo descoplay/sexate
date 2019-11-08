@@ -4,74 +4,68 @@ import { Menu, Input, Button, } from 'element-react'
 import ConfigService from '@/services/Config'
 import TopicService from '@/services/Topic'
 
+import Component from '@/components'
+
 import Auth from './components/Auth'
 import Topics from './components/Topics'
 
 import './style.scss'
 
-export default class Side extends React.Component {
-    constructor (props) {
-        super(props)
+export default class Side extends Component {
+    constructor (_props) {
+        super({
+            state: {
+                topics: [],
+                configs: {},
+                query: '',
+                logged: false,
+            },
+            methods: {
+                _onTopicClick (_topicId) {
+                    return TopicService.read(_topicId).then(response => {
+                        this.onTopicClick(response[0])
+                    })
+                },
+                _onSearch () {
+                    TopicService.list({ query: this.state.query, }).then(response => {
+                        this.onSearch(response)
+                    })
+                },
+                _onToogleAuth (_logged) {
+                    this.setState({ logged: _logged, })
 
-        this.state = {
-            topics: [],
-            configs: {},
-            query: '',
-            logged: false,
-        }
+                    this.onToogleAuth(_logged)
+                },
+                onChangeQuery (_query) {
+                    this.setState({
+                        query: _query,
+                    })
+                },
+                fetchConfigs () {
+                    ConfigService.read().then(response => {
+                        this.setState({
+                            configs: response[0],
+                        })
+                    })
+                },
+                fetchTopics () {
+                    TopicService.listIdent().then(response => {
+                        this.setState({
+                            topics: response,
+                        })
+                    })
+                },
+            },
+            events: {
+                onTopicClick: _props.onTopicClick,
+                onSearch: _props.onSearch,
+                onToogleAuth: _props.onToogleAuth,
+                newTopic: _props.onNewTopic,
+            },
+        })
 
         this.fetchTopics()
         this.fetchConfigs()
-
-        this.onTopicClick = props.onTopicClick
-        this.onSearch = props.onSearch
-        this.onToogleAuth = props.onToogleAuth
-        this.newTopic = props.onNewTopic
-
-        this._onTopicClick = this._onTopicClick.bind(this)
-        this._onSearch = this._onSearch.bind(this)
-        this._onToogleAuth = this._onToogleAuth.bind(this)
-        this.onChangeQuery = this.onChangeQuery.bind(this)
-    }
-
-    fetchConfigs () {
-        ConfigService.read().then(response => {
-            this.setState({
-                configs: response[0],
-            })
-        })
-    }
-
-    fetchTopics () {
-        TopicService.listIdent().then(response => {
-            this.setState({
-                topics: response,
-            })
-        })
-    }
-
-    _onTopicClick (_topicId) {
-        return TopicService.read(_topicId).then(response => {
-            this.onTopicClick(response[0])
-        })
-    }
-
-    _onSearch () {
-        TopicService.list({ query: this.state.query, }).then(response => {
-            this.onSearch(response)
-        })
-    }
-
-    onChangeQuery (_query) {
-        this.setState({
-            query: _query,
-        })
-    }
-
-    _onToogleAuth (_logged) {
-        this.setState({ logged: _logged, })
-
-        this.onToogleAuth(_logged)
     }
 
     render () {

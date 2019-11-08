@@ -2,35 +2,30 @@ import React from 'react'
 import { Input, } from 'element-react'
 import Markdown from 'markdown-to-jsx'
 
+import Component from '@/components'
+
 import './style.scss'
 
-export default class Content extends React.Component {
+export default class Content extends Component {
     constructor (props) {
-        super(props)
-
-        this.state = {
-            ...props,
-            record: {
-                title: '',
-                content: '',
+        super({
+            state: {
+                ...props,
+                record: {
+                    title: '',
+                    content: '',
+                },
             },
-        }
+            methods: {
+                onChangeRecord (_field, _value) {
+                    const record = this.state.record
 
-        this.onChangeRecord = this.onChangeRecord.bind(this)
-    }
+                    record[_field] = _value
 
-    componentWillReceiveProps (props) {
-        this.setState({
-            ...props,
+                    this.setState({ record, })
+                },
+            },
         })
-    }
-
-    onChangeRecord (_field, _value) {
-        const record = this.state.record
-
-        record[_field] = _value
-
-        this.setState({ record, })
     }
 
     render () {

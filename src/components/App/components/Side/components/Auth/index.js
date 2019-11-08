@@ -5,70 +5,66 @@ import { faLock, faLockOpen, } from '@fortawesome/free-solid-svg-icons'
 
 import AuthService from '@/services/Auth'
 
+import Component from '@/components'
+
 import './style.scss'
 
-export default class Auth extends React.Component {
+export default class Auth extends Component {
     constructor (_props) {
-        super()
+        super({
+            state: {
+                ifLogged: false,
+                visible: false,
+                user: '',
+                password: '',
+            },
+            methods: {
+                toogleVisible () {
+                    this.setState({
+                        visible: !this.state.visible,
+                    })
+                },
+                login () {
+                    AuthService.login(this.state.user, this.state.password)
+                        .then(response => {
+                            this.setLogged(true)
+                            this.toogleVisible()
+                        })
+                        .catch(e => {
+                            const content = 'Verifique os dados e tente novamente.'
+                            const title = 'Dados inválidos'
 
-        this.state = {
-            ifLogged: false,
-            visible: false,
-            user: '',
-            password: '',
-        }
+                            MessageBox.alert(content, title, { confirmButtonText: 'OK', })
+                        })
+                },
+                logout () {
+                    AuthService.logout()
+                        .then(() => {
+                            this.setLogged(false)
+                        })
+                        .catch(e => {
+                            const content = 'Ocorreu um erro, por favor tente novamente mais tarde.'
+                            const title = 'Ops!'
 
-        this.toogle = _props.toogle || function () {}
+                            MessageBox.alert(content, title, { confirmButtonText: 'OK', })
+                        })
+                },
+                setLogged (_logged) {
+                    this.setState({ ifLogged: _logged, })
+                    this.toogle(_logged)
+                },
+                onChangeValue (_value, _field) {
+                    const state = {}
 
-        this.toogleVisible = this.toogleVisible.bind(this)
-        this.login = this.login.bind(this)
-        this.logout = this.logout.bind(this)
-        this.onChangeValue = this.onChangeValue.bind(this)
-        this.setLogged = this.setLogged.bind(this)
-    }
+                    state[_field] = _value
 
-    toogleVisible () {
-        this.setState({
-            visible: !this.state.visible,
+                    this.setState(state)
+                },
+            },
+            events: {
+                toogle: _props.toogle || function () {},
+            },
         })
-    }
-
-    login () {
-        AuthService.login(this.state.user, this.state.password)
-            .then(response => {
-                this.setLogged(true)
-                this.toogleVisible()
-            })
-            .catch(e => {
-                MessageBox.alert('Verifique os dados e tente novamente.', 'Dados inválidos', {
-                    confirmButtonText: 'OK',
-                })
-            })
-    }
-
-    logout () {
-        AuthService.logout()
-            .then(() => {
-                this.setLogged(false)
-            })
-            .catch(e => {
-                MessageBox.alert('Ocorreu um erro, por favor tente novamente mais tarde.', 'Ops!', {
-                    confirmButtonText: 'OK',
-                })
-            })
-    }
-
-    setLogged (_logged) {
-        this.setState({ ifLogged: _logged, })
-        this.toogle(_logged)
-    }
-
-    onChangeValue (_value, _field) {
-        const state = {}
-
-        state[_field] = _value
-
-        this.setState(state)
     }
 
     render () {
