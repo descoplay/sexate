@@ -29,7 +29,6 @@ export default class App extends Component {
                     this.setState({
                         topic: _topic,
                         searchResults: [],
-                        newTopic: false,
                     })
 
                     if (_pushIgnore) return
@@ -37,7 +36,7 @@ export default class App extends Component {
                     window.history.pushState(oldUrl, null, newUrl)
                 },
                 newTopic () {
-                    this.setState({ newTopic: true, })
+                    this.setState({ topic: {}, })
                 },
                 onSearch (_topics) {
                     this.setState({
@@ -78,6 +77,12 @@ export default class App extends Component {
         this.router()
     }
 
+    onSaveTopic (_topic) {
+        TopicService.save(_topic).then(() => {
+            alert('Salvo, necessário recarregar')
+        })
+    }
+
     render () {
         let content
 
@@ -86,7 +91,7 @@ export default class App extends Component {
                 <Content
                     topic={this.state.topic}
                     logged={this.state.logged}
-                    newTopic={this.state.newTopic}
+                    onSave={this.onSaveTopic}
                 />
             )
         }

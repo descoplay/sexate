@@ -13,6 +13,24 @@ class Topic extends Service {
         })
     }
 
+    save (_topic) {
+        if (_topic.id) return this.update(_topic)
+
+        return this.create(_topic)
+    }
+
+    update (_topic) {
+        return this.Http.put(`${this.entity}/update`, _topic).then(response => {
+            return response.data
+        })
+    }
+
+    create (_topic) {
+        return this.Http.post(`${this.entity}/create`, _topic).then(response => {
+            return response.data
+        })
+    }
+
     readFirst () {
         return this.Http.get(`${this.entity}/readFirst`).then(response => {
             return response.data
