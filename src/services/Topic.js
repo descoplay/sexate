@@ -20,13 +20,13 @@ class Topic extends Service {
     }
 
     update (_topic) {
-        return this.Http.put(`${this.entity}/update`, _topic).then(response => {
+        return this.Http.put(`${this.entity}/save`, _topic).then(response => {
             return response.data
         })
     }
 
     create (_topic) {
-        return this.Http.post(`${this.entity}/create`, _topic).then(response => {
+        return this.Http.post(`${this.entity}/save`, _topic).then(response => {
             return response.data
         })
     }
@@ -47,6 +47,10 @@ class Topic extends Service {
         return this.Http.get(`${this.entity}/preview/${_id}`).then(response => {
             return response.data
         })
+    }
+
+    delete (_id) {
+        return this.Http.delete(`${this.entity}/delete/${_id}`)
     }
 }
 

@@ -132,6 +132,61 @@ class Topic {
         return getNext(_id)
     }
 
+    save (_record) {
+        if (_record.id) return this.update(_record)
+
+        return this.create(_record)
+    }
+
+    create (_record) {
+        const sql = `
+            INSERT INTO
+                ${this.table}
+            (
+                title,
+                content,
+                icon,
+                sequence
+            )
+            VALUES
+            (
+                "${_record.title}",
+                "${_record.content}",
+                "${_record.icon}",
+                ${_record.sequence}
+            )
+        `
+
+        return Db.conn.query(sql).then(response => {
+            return Promise.resolve({
+                id: response.insertId,
+                ..._record,
+            })
+        })
+    }
+
+    update (_record) {
+        const sql = `
+            UPDATE
+                ${this.table}
+            SET
+                title = "${_record.title}",
+                content = "${_record.content}",
+                icon = "${_record.icon}",
+                sequence = ${_record.sequence}
+            WHERE
+                id = ${_record.id}
+        `
+
+        return Db.conn.query(sql).then(() => _record)
+    }
+
+    delete (_id) {
+        const sql = `DELETE FROM ${this.table} WHERE id = ${_id}`
+
+        return Db.conn.query(sql)
+    }
+
 }
 
 module.exports = new Topic()

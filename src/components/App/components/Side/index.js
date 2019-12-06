@@ -15,7 +15,7 @@ export default class Side extends Component {
     constructor (_props) {
         super({
             state: {
-                topics: [],
+                topics: _props.topics,
                 configs: {},
                 query: '',
                 logged: false,
@@ -48,13 +48,6 @@ export default class Side extends Component {
                         })
                     })
                 },
-                fetchTopics () {
-                    TopicService.listIdent().then(response => {
-                        this.setState({
-                            topics: response,
-                        })
-                    })
-                },
             },
             events: {
                 onTopicClick: _props.onTopicClick,
@@ -64,7 +57,6 @@ export default class Side extends Component {
             },
         })
 
-        this.fetchTopics()
         this.fetchConfigs()
     }
 

@@ -16,6 +16,7 @@ export default class App extends Component {
     constructor () {
         super({
             state: {
+                topics: [],
                 topic: {},
                 searchResults: [],
                 logged: false,
@@ -71,16 +72,36 @@ export default class App extends Component {
                         })
                     })
                 },
+                fetchTopics () {
+                    TopicService.listIdent().then(response => {
+                        this.setState({
+                            topics: response,
+                        })
+                    })
+                },
+                onSaveTopic (_topic) {
+                    TopicService.save(_topic).then(response => {
+                        alert('Salvo')
+
+                        this.setState({ topic: response, })
+
+                        this.fetchTopics()
+                    }).catch (() => {
+                        this.fetchTopics()
+                    })
+                },
+                onDeleteTopic (_id) {
+                    TopicService.delete(_id).then(() => {
+                        alert('Tópico removido com sucesso')
+
+                        this.fetchTopics()
+                    })
+                },
             },
         })
 
+        this.fetchTopics()
         this.router()
-    }
-
-    onSaveTopic (_topic) {
-        TopicService.save(_topic).then(() => {
-            alert('Salvo, necessário recarregar')
-        })
     }
 
     render () {
@@ -91,6 +112,7 @@ export default class App extends Component {
                 <Content
                     topic={this.state.topic}
                     logged={this.state.logged}
+                    onDelete={this.onDeleteTopic}
                     onSave={this.onSaveTopic}
                 />
             )
@@ -106,6 +128,7 @@ export default class App extends Component {
             <Layout.Row className="App">
                 <Layout.Col span="4" className="SideArea">
                     <Side
+                        topics={this.state.topics}
                         onTopicClick={this.changeTopic}
                         onSearch={this.onSearch}
                         onToogleAuth={this.onToogleAuth}

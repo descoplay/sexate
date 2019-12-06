@@ -36,4 +36,22 @@ module.exports = _server => {
             res.json(response)
         })
     })
+
+    _server.post(`/${Model.entity}/save`, (req, res) => {
+        Model.save(req.body).then(response => {
+            res.json(response)
+        })
+    })
+
+    _server.put(`/${Model.entity}/save`, (req, res) => {
+        Model.save(req.body).then(response => {
+            res.json(response)
+        })
+    })
+
+    _server.delete(`/${Model.entity}/delete/:id`, (req, res) => {
+        Model.delete(req.params.id).then(response => {
+            res.json(response)
+        })
+    })
 }

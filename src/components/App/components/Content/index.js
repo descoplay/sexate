@@ -1,6 +1,6 @@
 import React from 'react'
 import Component from '@/components'
-import { Button, Input, } from 'element-react'
+import { Layout, Button, Input, } from 'element-react'
 
 import EditableText from '@/components/EditableText'
 
@@ -30,20 +30,34 @@ export default class Content extends Component {
                 _onSave () {
                     this.onSave(this.state.topic)
                 },
+                _onDelete () {
+                    this.setState({ topic: {}, })
+                    this.onDelete(this.state.topic.id)
+                },
             },
             events: {
                 onSave: _props.onSave,
+                onDelete: _props.onDelete,
             },
         })
     }
 
     render () {
-        let buttonTag = ''
+        let buttonsTag = ''
         let IconInput = ''
         let SequenceInput = ''
 
         if (this.state.logged) {
-            buttonTag = <Button icon="check" onClick={this._onSave}>Salvar</Button>
+            buttonsTag = (
+                <Layout.Row gutter="6">
+                    <Layout.Col span="12">
+                        <Button icon="check" onClick={this._onSave}>Salvar</Button>
+                    </Layout.Col>
+                    <Layout.Col span="12">
+                        <Button icon="delete" onClick={this._onDelete}>Remover</Button>
+                    </Layout.Col>
+                </Layout.Row>
+            )
 
             IconInput = <Input
                 placeholder="Ícone"
@@ -77,7 +91,7 @@ export default class Content extends Component {
                 />
                 {IconInput}
                 {SequenceInput}
-                {buttonTag}
+                {buttonsTag}
             </div>
         )
     }
