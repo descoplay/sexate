@@ -1,11 +1,8 @@
-// TODO: Trocar alert's
-// TODO: Login/Logout com popover
+// TODO: Bug abrir tópico pela busca
 
 // TODO: Ao clicar em novo tópico, mudar URL
 // TODO: Ao criar novo tópico, mudar URL para ele
 // TODO: Ao deletar tópico, redirecionar para o primeiro tópico
-
-// TODO: Ao abrir um tópico pela busca enquanto logado, form não esta preenchendo
 
 // TODO: Ao paginar até o ultimo ou primeiro tópico, bloquear o botão de seguir ou voltar
 

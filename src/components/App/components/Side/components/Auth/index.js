@@ -1,5 +1,5 @@
 import React from 'react'
-import { Input, Dialog, Button, Layout, MessageBox, } from 'element-react'
+import { Input, Dialog, Button, Layout, MessageBox, Tooltip, } from 'element-react'
 import { FontAwesomeIcon, } from '@fortawesome/react-fontawesome'
 import { faLock, faLockOpen, } from '@fortawesome/free-solid-svg-icons'
 
@@ -69,12 +69,19 @@ export default class Auth extends Component {
 
     render () {
         let authIcon
-
         if (this.state.ifLogged) {
-            authIcon = <FontAwesomeIcon icon={faLockOpen} onClick={this.logout} />
+            authIcon = (
+                <Tooltip effect="dark" content="Logout" placement="right">
+                    <FontAwesomeIcon icon={faLockOpen} onClick={this.logout} />
+                </Tooltip>
+            )
         }
         else {
-            authIcon = <FontAwesomeIcon icon={faLock} onClick={this.toogleVisible} />
+            authIcon = (
+                <Tooltip effect="dark" content="Login" placement="right">
+                    <FontAwesomeIcon icon={faLock} onClick={this.toogleVisible} />
+                </Tooltip>
+            )
         }
 
         return (

@@ -1,7 +1,7 @@
 import React from 'react'
 import './style.scss'
 
-import { Layout, } from 'element-react'
+import { Layout, MessageBox, } from 'element-react'
 
 import Component from '@/components'
 
@@ -81,7 +81,10 @@ export default class App extends Component {
                 },
                 onSaveTopic (_topic) {
                     TopicService.save(_topic).then(response => {
-                        alert('Salvo')
+                        const content = 'Tópico salvo'
+                        const title = 'Sucesso'
+
+                        MessageBox.alert(content, title, { confirmButtonText: 'OK', })
 
                         this.setState({ topic: response, })
 
@@ -92,7 +95,10 @@ export default class App extends Component {
                 },
                 onDeleteTopic (_id) {
                     TopicService.delete(_id).then(() => {
-                        alert('Tópico removido com sucesso')
+                        const content = 'Tópico removido'
+                        const title = 'Sucesso'
+
+                        MessageBox.alert(content, title, { confirmButtonText: 'OK', })
 
                         this.fetchTopics()
                     })
