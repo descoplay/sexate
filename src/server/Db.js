@@ -4,7 +4,7 @@ class Db {
     constructor () {
         this.config = {
             user: 'root',
-            password: '123456',
+            password: '12345678',
             database: 'sexate',
         }
     }
