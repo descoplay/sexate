@@ -23,10 +23,14 @@ export default class App extends Component {
                 newTopic: false,
             },
             methods: {
-                changeTopic (_topic, _pushIgnore = false) {
+                changeUrl (_newUrl, _state) {
                     const oldUrl = window.location.pathname
-                    const newUrl = `/${_topic.id}`
 
+                    window.history.pushState(oldUrl, null, _newUrl)
+
+                    this.setState(_state)
+                },
+                changeTopic (_topic, _pushIgnore = false) {
                     this.setState({
                         topic: _topic,
                         searchResults: [],
@@ -34,10 +38,12 @@ export default class App extends Component {
 
                     if (_pushIgnore) return
 
-                    window.history.pushState(oldUrl, null, newUrl)
+                    const newUrl = `/${_topic.id}`
+
+                    this.changeUrl(newUrl)
                 },
                 newTopic () {
-                    this.setState({ topic: {}, })
+                    this.changeUrl('/', { topic: {}, })
                 },
                 onSearch (_topics) {
                     this.setState({
@@ -73,7 +79,7 @@ export default class App extends Component {
                     })
                 },
                 fetchTopics () {
-                    TopicService.listIdent().then(response => {
+                    return TopicService.listIdent().then(response => {
                         this.setState({
                             topics: response,
                         })
@@ -86,7 +92,7 @@ export default class App extends Component {
 
                         MessageBox.alert(content, title, { confirmButtonText: 'OK', })
 
-                        this.setState({ topic: response, })
+                        this.changeUrl('/' + response.id, { topic: response, })
 
                         this.fetchTopics()
                     }).catch (() => {
@@ -94,13 +100,15 @@ export default class App extends Component {
                     })
                 },
                 onDeleteTopic (_id) {
-                    TopicService.delete(_id).then(() => {
+                    TopicService.delete(_id).then(async () => {
                         const content = 'Tópico removido'
                         const title = 'Sucesso'
 
                         MessageBox.alert(content, title, { confirmButtonText: 'OK', })
 
-                        this.fetchTopics()
+                        await this.fetchTopics()
+
+                        this.changeTopic(this.state.topics[0])
                     })
                 },
             },

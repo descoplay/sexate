@@ -10,7 +10,6 @@ export default class Content extends Component {
     constructor (_props) {
         super({
             state: {
-                ..._props,
                 newTopic: false,
                 topic: {
                     title: '',
@@ -18,6 +17,7 @@ export default class Content extends Component {
                     sequence: '',
                     icon: '',
                 },
+                ..._props,
             },
             methods: {
                 onChangeRecord (_field, _value) {

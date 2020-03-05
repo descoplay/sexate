@@ -1,9 +1,3 @@
-// TODO: Bug abrir tópico pela busca
-
-// TODO: Ao clicar em novo tópico, mudar URL
-// TODO: Ao criar novo tópico, mudar URL para ele
-// TODO: Ao deletar tópico, redirecionar para o primeiro tópico
-
 // Nenhum tópico informa ao invés de dar erro
 
 // TODO: Campo de conteúdo maior
