@@ -1,6 +1,3 @@
-// TODO: Nenhum tópico informa ao invés de dar erro
-// TODO: Ao abrir form de criação, auto-preencher sequencia com o proximo
-
 // TODO: Campo de conteúdo maior
 // TODO: Campo de tópico parente
 

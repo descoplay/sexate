@@ -52,6 +52,12 @@ class Topic extends Service {
     delete (_id) {
         return this.Http.delete(`${this.entity}/delete/${_id}`)
     }
+
+    nextAvailableSequence () {
+        return this.Http.get(`${this.entity}/nextAvailableSequence`).then(response => {
+            return response.data[0].sequence
+        })
+    }
 }
 
 export default new Topic()

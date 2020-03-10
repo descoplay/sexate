@@ -187,6 +187,16 @@ class Topic {
         return Db.conn.query(sql)
     }
 
+    nextAvailableSequence () {
+        const sql = `SELECT sequence FROM ${this.table} ORDER BY sequence DESC LIMIT 1`
+
+        return Db.conn.query(sql).then(response => {
+            response[0].sequence++
+
+            return response
+        })
+    }
+
 }
 
 module.exports = new Topic()

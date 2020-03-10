@@ -54,4 +54,10 @@ module.exports = _server => {
             res.json(response)
         })
     })
+
+    _server.get(`/${Model.entity}/nextAvailableSequence`, (req, res) => {
+        Model.nextAvailableSequence().then(response => {
+            res.json(response)
+        })
+    })
 }

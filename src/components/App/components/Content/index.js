@@ -4,6 +4,8 @@ import { Layout, Button, Input, } from 'element-react'
 
 import EditableText from '@/components/EditableText'
 
+import TopicService from '@/services/Topic'
+
 import './style.scss'
 
 export default class Content extends Component {
@@ -42,7 +44,25 @@ export default class Content extends Component {
         })
     }
 
+    async componentWillReceiveProps (_props) {
+        super.componentWillReceiveProps(_props)
+
+        if (_props.topic.id) return
+
+        const nextSequence = await TopicService.nextAvailableSequence()
+
+        this.setState({ topic: { ..._props.topic, sequence: nextSequence, }, })
+    }
+
     render () {
+        if (!this.state.topic) {
+            return (
+                <div className="Content">
+                    <h1>Nenhum tópico encontrado com o ID informado</h1>
+                </div>
+            )
+        }
+
         let buttonsTag = ''
         let IconInput = ''
         let SequenceInput = ''
