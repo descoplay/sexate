@@ -1,14 +1,12 @@
-// Nenhum tópico informa ao invés de dar erro
+// TODO: Nenhum tópico informa ao invés de dar erro
+// TODO: Ao abrir form de criação, auto-preencher sequencia com o proximo
 
 // TODO: Campo de conteúdo maior
+// TODO: Campo de tópico parente
+
 // TODO: Mudar título do sistema
 
-// TODO: Campo de tópico parente
-// TODO: Campo não preenchido não pode ser undefined nem no form nem no display
-
 // TODO: Ao paginar até o ultimo ou primeiro tópico, bloquear o botão de seguir ou voltar
-
-// TODO: Ao abrir form de criação, auto-preencher sequencia com o proximo
 
 // TODO: Alinhar botões da paginação com area de login do sidebar
 // TODO: Alinhamento form login
